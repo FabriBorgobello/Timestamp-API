@@ -13,10 +13,22 @@ const server = http.createServer((req, res) => {
   }
 
   const url = new URL(req.url, `http://${req.headers.host}`);
+
+  // Parse URL query parameters
   const params = new URLSearchParams(url.search);
+  const paramsObj = {};
+  for (const [key, value] of params) {
+    paramsObj[key] = value;
+  }
+
   if (url.pathname === '/time') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ currentTime: new Date() }));
+    res.end(
+      JSON.stringify({
+        currentTime: new Date(),
+        ...(Object.keys(paramsObj).length > 0 && { params: paramsObj }),
+      }),
+    );
   } else {
     res.writeHead(404);
     res.end();

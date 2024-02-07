@@ -19,3 +19,15 @@ With the server running, access http://localhost:3001/time to receive the curren
 ```json
 { "currentTime": "2024-02-07T12:34:56.789Z" }
 ```
+
+> **Note:** This endpoint will also return any query parameters you pass in the URL, for example: http://localhost:3001/time?id=1&timezone=Europe/London would return:
+
+```json
+{
+  "currentTime": "2024-02-07T12:34:56.789Z",
+  "params": {
+    "id": "1",
+    "timezone": "Europe/London"
+  }
+}
+```
